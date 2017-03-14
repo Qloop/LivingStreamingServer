@@ -1,0 +1,26 @@
+spring:
+  resources:
+    chain:
+      enabled: true
+  datasource:
+    url: jdbc:mysql://118.89.112.50:3306/living_streaming
+    username: root
+    password: qloop
+    test-while-idle: true
+    validation-query: SELECT 1
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+  http:
+    multipart:
+      max-file-size: 10240kb
+      max-request-size: 10240kb
+server:
+  port: 8081
