@@ -4,17 +4,18 @@ import com.baidubce.BceClientConfiguration;
 import com.baidubce.auth.DefaultBceCredentials;
 import com.baidubce.http.RetryPolicy;
 import com.baidubce.services.lss.LssClient;
+import com.boris.livingstreaming.config.Config;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by Qloop on 2017/3/14.
  */
 @Service
-public class LssClientUtil {
+public class LssClientUtils {
 
-    private boolean createLssClient() {
-        String ACCESS_KEY_ID = "d50441c6531e4fec8faf415abd8b8511";
-        String SECRET_ACCESS_KEY = "de4ea1d9e60d4b2b910817e52d9a31e8";
+    public static LssClient createLssClient() {
+        String ACCESS_KEY_ID = Config.ACCESS_KEY_ID;
+        String SECRET_ACCESS_KEY = Config.SECRET_ACCESS_KEY;
 
         //初始化一个LssClient
         BceClientConfiguration config = new BceClientConfiguration();
@@ -25,7 +26,6 @@ public class LssClientUtil {
         config.setMaxConnections(10);// 设置允许打开的最大连接数 10
         config.setRetryPolicy(RetryPolicy.DEFAULT_RETRY_POLICY);  //连接重试策略
 
-        LssClient client = new LssClient(config);
-        return true;
+        return new LssClient(config);
     }
 }

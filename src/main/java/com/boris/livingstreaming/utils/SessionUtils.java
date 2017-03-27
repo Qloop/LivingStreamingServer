@@ -2,6 +2,7 @@ package com.boris.livingstreaming.utils;
 
 import com.baidubce.services.lss.LssClient;
 import com.baidubce.services.lss.model.*;
+import com.boris.livingstreaming.config.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,25 +12,23 @@ import java.util.Map;
  * 直播会话/事件
  * Created by Qloop on 2017/3/14.
  */
-public class SessionUtil {
+public class SessionUtils {
 
-
-    private ArrayList<String> presetList;
 
     /* 创建一个兼具水印、缩略图、多码率功能的推流Session */
-    public void createPushSession(LssClient lssClient) {
-        String description = "test create session with thumbnail and watermarks";
-        String notification = "notification_name";  // 通知"notification_name"必须提前建立好
+    public static CreateSessionResponse createPushSession(LssClient lssClient, String description) {
+//        String description = "test create session with thumbnail and watermarks";
+//        String notification = "notification_name";  // 通知"notification_name"必须提前建立好
         LivePublishInfo publish = new LivePublishInfo();
         publish.setRegion("bj");
-        presetList = new ArrayList<>();
-        presetList.add("preset_name_1");  // 转码模板"preset_name_1"必须提前建立好
-        presetList.add("preset_name_2");  // 转码模板"preset_name_2"必须提前建立好
-        Watermarks watermarks = new Watermarks();
-        watermarks.setImage(Arrays.asList("lss_sdk_java_imw"));  // 图片水印"lss_sdk_java_imw"水印必须已经提前建立好
-        watermarks.setTimestamp(Arrays.asList("lss_sdk_java_tsw"));  // 时间戳水印"lss_sdk_java_tsw"水印必须已经提前建立好
-        CreateSessionResponse resp = lssClient.createSession(description, presetList, notification, null,
-                "lss_java_sdk", publish, "lss_java_sdk_thumbnail", watermarks);  // 录制模板"lss_java_sdk"和缩略图"lss_java_sdk_thumbnail"必须提前建立好
+        ArrayList<String> presetList = new ArrayList<>();
+        presetList.add("live.rtmp_hls_forward_only");  // 转码模板"preset_name_1"必须提前建立好
+//        presetList.add("preset_name_2");  // 转码模板"preset_name_2"必须提前建立好
+//        Watermarks watermarks = new Watermarks();
+//        watermarks.setImage(Arrays.asList("lss_sdk_java_imw"));  // 图片水印"lss_sdk_java_imw"水印必须已经提前建立好
+//        watermarks.setTimestamp(Arrays.asList("lss_sdk_java_tsw"));  // 时间戳水印"lss_sdk_java_tsw"水印必须已经提前建立好
+        CreateSessionResponse resp = lssClient.createSession(description, presetList, null, null,
+                null, publish, Config.THUMBNAIL_MODEL, null);  // 录制模板"lss_java_sdk"和缩略图"lss_java_sdk_thumbnail"必须提前建立好
         System.out.println("sessionId: " + resp.getSessionId());
         System.out.println("presets: " + resp.getPresets());
         System.out.println("description: " + resp.getDescription());
@@ -53,6 +52,7 @@ public class SessionUtil {
         if (resp.getPlay() != null && resp.getPlay().getFlvUrls() != null) {
             System.out.println("flv urls: " + resp.getPlay().getFlvUrls());
         }
+        return resp;
     }
 
     /* 创建一个拉流Session */
@@ -118,6 +118,7 @@ public class SessionUtil {
 
     /**
      * 开启推流/播放认证 查询Session 返回带认证token的推流地址和播放地址
+     *
      * @param client
      * @param sessionId
      * @param timeoutInMinute
