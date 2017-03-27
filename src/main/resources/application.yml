@@ -4,8 +4,8 @@ spring:
       enabled: true
   datasource:
     url: jdbc:mysql://118.89.112.50:3306/living_streaming
-    username: root
-    password: qloop
+    username: 
+    password:
     test-while-idle: true
     validation-query: SELECT 1
   jpa:
