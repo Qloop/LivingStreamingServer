@@ -1,6 +1,6 @@
 package com.boris.livingstreaming.controllers;
 
-import com.boris.livingstreaming.model.ApplyPushInfo;
+import com.boris.livingstreaming.model.ApplyPushInfoDto;
 import com.boris.livingstreaming.service.ApplyPushService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,7 @@ public class LivingRoomController {
     }
 
     @RequestMapping(value = "/apply_push_url", method = RequestMethod.GET)
-    public ApplyPushInfo applyPushUrl(String description) {
+    public ApplyPushInfoDto applyPushUrl(String description) {
         return applyPushService.applyPushUrl(description);
     }
 

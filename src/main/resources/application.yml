@@ -4,8 +4,8 @@ spring:
       enabled: true
   datasource:
     url: jdbc:mysql://118.89.112.50:3306/living_streaming
-    username: 
-    password:
+    username: root
+    password: qloop
     test-while-idle: true
     validation-query: SELECT 1
   jpa:
@@ -23,4 +23,4 @@ spring:
       max-file-size: 10240kb
       max-request-size: 10240kb
 server:
-  port: 8081
+  port: 8082
