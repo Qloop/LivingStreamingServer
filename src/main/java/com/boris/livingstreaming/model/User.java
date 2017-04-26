@@ -14,11 +14,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
-    private String nickname;
     private String avatar;
-    private String password;
     private String liveRoom; //创建的直播间地址
+    @NotNull
+    private String mail;
+    private String nickname;
+    private String password;
     //订阅的直播间 由id去t_subscribe表查找
 
     @NotNull
@@ -35,6 +36,14 @@ public class User {
         this.id = id;
     }
 
+    public User(String mail, String nickname, String password, int status, Date createDate) {
+        this.mail = mail;
+        this.nickname = nickname;
+        this.password = password;
+        this.status = status;
+        this.createDate = createDate;
+    }
+
     public long getId() {
         return id;
     }
@@ -43,6 +52,13 @@ public class User {
         this.id = id;
     }
 
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getMail() {
+        return mail;
+    }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;

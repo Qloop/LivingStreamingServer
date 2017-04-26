@@ -12,4 +12,9 @@ public class Config {
 
     /*Error Code*/
     public static final int APPLY_PUSH_FAILED = 1;
+
+    /*账户状态*/
+    public static final int STATUS_UNAUTHORIZED = 0;
+    public static final int STATUS_NORMAL = 1;
+    public static final int STATUS_STOPPED = -1;
 }
