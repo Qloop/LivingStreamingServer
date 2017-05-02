@@ -1,5 +1,6 @@
 package com.boris.livingstreaming.service;
 
+import com.boris.livingstreaming.Dto.UserInfoDto;
 import com.boris.livingstreaming.config.Config;
 import com.boris.livingstreaming.dao.UserDao;
 import com.boris.livingstreaming.model.User;
@@ -27,18 +28,31 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public User getUserInfo(String mail) {
+    public UserInfoDto getUserInfo(String mail) {
         User customUser = null;
+        UserInfoDto userInfoDto = new UserInfoDto();
         try {
             customUser = userDao.findByMail(mail);
+            userInfoDto.setResult("success");
+            userInfoDto.setLiveRoom(customUser.getLiveRoom() == null ? "" : customUser.getLiveRoom());
+            userInfoDto.setAvatar(customUser.getAvatar() == null ? "" : customUser.getAvatar());
+            userInfoDto.setMail(customUser.getMail());
+            userInfoDto.setNickname(customUser.getNickname());
         } catch (Exception ex) {
             ex.printStackTrace();
+            userInfoDto.setResult("failed");
         }
-        return customUser;
+        return userInfoDto;
     }
 
-    public String login(String email, String password){
+    public String login(String email, String password) {
+        System.out.println("email is " + email + "password i s " + password);
         User customUser = userDao.findByMail(email);
+        if(customUser == null){
+            System.out.println("null -==-=-=--------------------");
+        }else {
+            System.out.println("pwd si : " + customUser.getPassword());
+        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (passwordEncoder.matches(password, customUser.getPassword())) {
             httpSession.setAttribute("user", customUser);
@@ -51,7 +65,7 @@ public class UserService {
     /**
      * 验证邮件回执 验证
      */
-    public String validationEmail(String name, Double validateCode, Date sendDate){
+    public String validationEmail(String name, Double validateCode, Date sendDate) {
         Date currentDate = new Date();
         long timeSpan = currentDate.getTime() - sendDate.getTime();
         if (name.length() * MODULUS != validateCode) {
@@ -78,9 +92,9 @@ public class UserService {
         User customUser = null;
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Map<String, Object> userInfo = new HashMap<>();
-        if (userDao.findByNickname(name) == null) {
+        if (userDao.findByNickname(name) == null && userDao.findByMail(mail) == null) {
             try {
-                customUser = new User(mail, name, passwordEncoder.encode(password), Config.STATUS_UNAUTHORIZED,new Date());
+                customUser = new User(mail, name, passwordEncoder.encode(password), Config.STATUS_UNAUTHORIZED, new Date());
                 userDao.save(customUser);
                 userInfo.put("result", "注册成功");
                 userInfo.put("id", customUser.getId());
@@ -90,7 +104,7 @@ public class UserService {
                 userInfo.put("mail", customUser.getMail());
 
                 ///邮件的内容
-                StringBuffer sb = new StringBuffer("点击下面链接激活账号，48小时有效，否则重新注册账号，链接只能使用一次，请尽快激活 ！</br>");
+                StringBuilder sb = new StringBuilder("点击下面链接激活账号，48小时有效，否则重新注册账号，链接只能使用一次，请尽快激活 ！</br>");
                 sb.append("<a href=\"http://118.89.112.50:8082/user/validate?&name=");
                 sb.append(name);
                 sb.append("&validateCode=");
@@ -124,7 +138,7 @@ public class UserService {
     /**
      * 重置密码
      */
-    public boolean resetPwd(String mail){
+    public boolean resetPwd(String mail) {
         System.out.println("mail " + mail);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (userDao.findByMail(mail) != null) {

@@ -1,5 +1,6 @@
 package com.boris.livingstreaming.controllers;
 
+import com.boris.livingstreaming.Dto.UserInfoDto;
 import com.boris.livingstreaming.dao.UserDao;
 import com.boris.livingstreaming.model.User;
 import com.boris.livingstreaming.service.UserService;
@@ -23,16 +24,10 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    private HttpSession httpSession;
-
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
     private UserService userService;
 
     @RequestMapping("/user_info")
-    public User getUserInfo(String mail) {
+    public UserInfoDto getUserInfo(String mail) {
         return userService.getUserInfo(mail);
     }
 
