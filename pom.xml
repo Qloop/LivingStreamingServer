@@ -75,6 +75,12 @@
             <optional>true</optional><!-- optional=true,依赖不会传递，该项目依赖devtools；之后依赖该项目的项目如果想要使用devtools，需要重新引入 -->
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>com.sun.xml.fastinfoset</groupId>-->
+            <!--<artifactId>FastInfoset</artifactId>-->
+            <!--<version>1.2.13</version>-->
+        <!--</dependency>-->
+
         <!--百度LSS2.0服务端sdk-->
         <dependency>
             <groupId>com.baidubce</groupId>
