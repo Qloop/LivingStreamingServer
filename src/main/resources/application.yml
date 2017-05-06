@@ -23,6 +23,11 @@ spring:
   http:
     multipart:
       max-file-size: 10240kb
-      max-request-size: 10240kb
+      max-request-size: 102400kb
 server:
   port: 8082
+  max-http-header-size: 65536
+  tomcat:
+    max-http-post-size: 4194304
+  jetty:
+    max-http-post-size: 4194304

@@ -17,4 +17,6 @@ public class Config {
     public static final int STATUS_UNAUTHORIZED = 0;
     public static final int STATUS_NORMAL = 1;
     public static final int STATUS_STOPPED = -1;
+
+    public static final String BASE_URL = "http://www.tzloop.com";
 }
