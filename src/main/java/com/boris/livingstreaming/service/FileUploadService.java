@@ -1,15 +1,16 @@
 package com.boris.livingstreaming.service;
 
+import com.boris.livingstreaming.Dto.UserInfoDto;
 import com.boris.livingstreaming.config.Config;
 import com.boris.livingstreaming.dao.UserDao;
 import com.boris.livingstreaming.model.User;
+import org.apache.http.util.TextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -50,6 +51,19 @@ public class FileUploadService {
         }
 
         return path1;
+    }
+
+    public UserInfoDto getAvatar(String mail) {
+        User user = userDao.findByMail(mail);
+        UserInfoDto userInfoDto = new UserInfoDto();
+        if (!TextUtils.isEmpty(user.getAvatar())) {
+            userInfoDto.setResult("success");
+            userInfoDto.setAvatar(user.getAvatar());
+            return userInfoDto;
+        } else {
+            userInfoDto.setResult("failed");
+            return userInfoDto;
+        }
     }
 
 }

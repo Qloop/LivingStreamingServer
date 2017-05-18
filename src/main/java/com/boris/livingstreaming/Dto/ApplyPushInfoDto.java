@@ -1,7 +1,7 @@
-package com.boris.livingstreaming.model;
+package com.boris.livingstreaming.Dto;
 
 /**
- * 请求推送直播数据流的地址 【之后改为Dto 补写Dao】
+ * 请求推送直播数据流的地址
  * Created by Qloop on 2017/3/27.
  */
 public class ApplyPushInfoDto {

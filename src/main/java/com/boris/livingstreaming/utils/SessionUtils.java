@@ -123,7 +123,7 @@ public class SessionUtils {
      * @param sessionId
      * @param timeoutInMinute
      */
-    public void getSessionWithToken(LssClient client, String sessionId, Integer timeoutInMinute) {
+    public static void getSessionWithToken(LssClient client, String sessionId, Integer timeoutInMinute) {
         GetSessionResponse resp = client.getSessionWithToken(sessionId, timeoutInMinute);
         System.out.println(resp.toString());
     }
@@ -131,28 +131,28 @@ public class SessionUtils {
     /**
      * 开始拉流  只对拉留Session有效
      */
-    public void startPullSession(LssClient client, String sessionId) {
+    public static void startPullSession(LssClient client, String sessionId) {
         client.startPullSession(sessionId);
     }
 
     /**
      * 暂停Session 不接收任何推流或拉流
      */
-    public void pauseSession(LssClient client, String sessionId) {
+    public static void pauseSession(LssClient client, String sessionId) {
         client.pauseSession(sessionId);
     }
 
     /**
      * 恢复Session 重新进入可以接收推流或拉流的状态
      */
-    public void resumeSession(LssClient client, String sessionId) {
+    public static void resumeSession(LssClient client, String sessionId) {
         client.resumeSession(sessionId);
     }
 
     /**
      * 刷新Session。刷新直播会话的[推流地址]，中断当前推流。
      */
-    public void refreshSession(LssClient client, String sessionId) {
+    public static void refreshSession(LssClient client, String sessionId) {
         RefreshSessionResponse resp = client.refreshSession(sessionId);
         System.out.println("sessionId: " + resp.getSessionId());
         System.out.println("preset: " + resp.getPreset());
@@ -177,24 +177,24 @@ public class SessionUtils {
     /**
      * 删除Session
      */
-    public void deleteSession(LssClient client, String sessionId) {
+    public static void deleteSession(LssClient client, String sessionId) {
         client.deleteSession(sessionId);
     }
 
     /**
      * 查询实时直播源信息
      */
-    public String getSessionSourceInfo(LssClient client, String sessionId) {
+    public static GetSessionSourceInfoResponse getSessionSourceInfo(LssClient client, String sessionId) {
         GetSessionSourceInfoResponse resp = client.getSessionSourceInfo(sessionId);
         System.out.println(resp.toString());
-        return resp.toString();
+        return resp;
     }
 
     /**
      * 插入提示点 curpoint 实现插入广告等功能
      */
-    public void insertCuePoint(LssClient client, String sessionId, String callback,
-                               Map<String, String> arguments) {
+    public static void insertCuePoint(LssClient client, String sessionId, String callback,
+                                      Map<String, String> arguments) {
         client.insertCuePoint(sessionId, callback, arguments);
     }
 }
